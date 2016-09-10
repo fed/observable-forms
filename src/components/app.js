@@ -4,6 +4,10 @@ import TextField from './forms/textfield';
 import './styles.css';
 
 export default class App extends React.Component {
+  handleClick(formData) {
+    console.info('Form processing', formData);
+  }
+
   render() {
     return (
       <section>
@@ -14,7 +18,7 @@ export default class App extends React.Component {
         <Form>
           <TextField name="emailAddress" label="Email address" type="email" />
           <TextField name="confirmEmailAddress" label="Confirm email address" type="email" />
-          <button type="submit">Submit form</button>
+          <button type="submit" onClick={this.handleClick.bind(this)}>Submit form</button>
         </Form>
       </section>
     );

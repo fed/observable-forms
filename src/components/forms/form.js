@@ -13,6 +13,7 @@ export default class Form extends React.Component {
   handleSubmit() {
     if (this.isValid()) {
       const children = React.Children.toArray(this.props.children);
+      const button = children.filter((child) => child.type === 'button')[0];
       const formValues = children
         .filter((child) => child.type !== 'button')
         .map((textfield) => {
@@ -22,9 +23,9 @@ export default class Form extends React.Component {
           ];
         });
 
-      console.log('form values', fromPairs(formValues));
+      button.props.onClick(fromPairs(formValues));
     } else {
-      console.log('form is invalid!!!');
+      console.log('Form is INVALID');
     }
   }
 
