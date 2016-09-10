@@ -100,6 +100,7 @@ TextField.defaultProps = {
 };
 
 TextField.propTypes = {
+  name: React.PropTypes.string.isRequired,
   label: React.PropTypes.string,
   type: React.PropTypes.string
 };

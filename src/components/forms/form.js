@@ -2,43 +2,48 @@ import React from 'react';
 import fromPairs from 'lodash/fromPairs';
 
 export default class Form extends React.Component {
-  isValid() {
-    const refs = React.Children.map(this.props.children, (child) => child.props.name);
-    const invalidChildren = refs.filter((elementRef) => this.refs[elementRef].state.errors.length > 0);
-    const allFieldsAreValid = invalidChildren.length === 0;
+  getChildren() {
+    return React.Children.toArray(this.props.children);
+  }
 
-    return allFieldsAreValid;
+  getInputFields() {
+    return this.getChildren()
+      .filter((component) => component.type !== 'button');
+  }
+
+  getSubmitButton() {
+    return this.getChildren()
+      .filter((component) => component.type === 'button')[0];
+  }
+
+  isValid() {
+    const invalidChildren = this.getInputFields()
+      .map((component) => component.props.name)
+      .filter((ref) => this.refs[ref].state.errors.length > 0);
+
+    return invalidChildren.length === 0;
   }
 
   handleSubmit() {
     if (this.isValid()) {
-      const children = React.Children.toArray(this.props.children);
-      const button = children.filter((child) => child.type === 'button')[0];
-      const formValues = children
-        .filter((child) => child.type !== 'button')
-        .map((textfield) => {
-          return [
-            textfield.props.name,
-            this.refs[textfield.props.name].state.value
-          ];
-        });
+      const formValuesArray = this.getInputFields()
+        .map((textfield) => [
+          textfield.props.name,
+          this.refs[textfield.props.name].state.value
+        ]);
+      const formValues = fromPairs(formValuesArray);
 
-      button.props.onClick(fromPairs(formValues));
+      this.getSubmitButton().props.onClick(formValues);
     } else {
-      console.log('Form is INVALID');
+      console.error('Form is not valid');
     }
   }
 
   render() {
-    const children = React.Children.map(this.props.children, (child) => {
-      const ref = child.props.name || Date.now();
-
-      if (child.type === 'button') {
-        return React.cloneElement(child, {ref, onClick: this.handleSubmit.bind(this)});
-      } else {
-        return React.cloneElement(child, {ref});
-      }
-    });
+    const inputFields = this.getInputFields()
+      .map((component) => React.cloneElement(component, {ref: component.props.name}));
+    const submitButton = React.cloneElement(this.getSubmitButton(), {onClick: this.handleSubmit.bind(this)});
+    const children = inputFields.concat([submitButton]);
 
     return <div>{children}</div>;
   }
