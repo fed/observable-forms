@@ -1,6 +1,6 @@
 import React from 'react';
 import Form from './forms/form.js';
-import TextField from './forms/textfield';
+import Email from './forms/email';
 import './styles.css';
 
 export default class App extends React.Component {
@@ -16,8 +16,8 @@ export default class App extends React.Component {
         </header>
 
         <Form>
-          <TextField name="emailAddress" label="Email address" type="email" />
-          <TextField name="confirmEmailAddress" label="Confirm email address" type="email" />
+          <Email name="emailAddress" label="Email address" />
+          <Email name="confirmEmailAddress" label="Confirm email address" />
           <button type="submit" onClick={this.handleClick.bind(this)}>Submit form</button>
         </Form>
       </section>
