@@ -1,5 +1,6 @@
-@value green: #3cca5e;
 @value red: #f2565a;
+@value green: #3cca5e;
+@value blue: #056cc1;
 
 :global {
   body {
@@ -7,6 +8,12 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
     line-height: 1.6;
+  }
+
+  fieldset {
+    border: 0;
+    margin-bottom: 20px;
+    padding: 0;
   }
 
   label {
@@ -25,15 +32,15 @@
     width: 100%;
   }
 
-  button[type="submit"] {
-    background-color: green;
+  button[type="submit"],
+  input[type="submit"] {
+    background-color: blue;
     border: 0;
     border-radius: 3px;
     color: #fff;
     cursor: pointer;
     font-size: 10px;
-    margin-left: 5px;
-    padding: 3px 6px;
+    padding: 10px;
     text-transform: uppercase;
   }
 

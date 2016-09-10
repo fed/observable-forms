@@ -1,4 +1,5 @@
 import React from 'react';
+import Form from './forms/form.js';
 import TextField from './forms/textfield';
 import './styles.css';
 
@@ -10,7 +11,11 @@ export default class App extends React.Component {
           <h1>bacon-forms@0.0.0</h1>
         </header>
 
-        <TextField name="email" label="Email address" type="email" />
+        <Form>
+          <TextField name="emailAddress" label="Email address" type="email" />
+          <TextField name="confirmEmailAddress" label="Confirm email address" type="email" />
+          <button type="submit">Submit form</button>
+        </Form>
       </section>
     );
   }

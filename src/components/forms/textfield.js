@@ -13,7 +13,7 @@ export default class TextField extends React.Component {
   }
 
   componentDidMount() {
-    const element = this.refs[this.props.name];
+    const element = this.refs.input;
     const inputStream = Bacon
       .fromEvent(element, 'keyup')
       .debounce(300)
@@ -21,10 +21,7 @@ export default class TextField extends React.Component {
 
     // set state
     inputStream
-      .onValue((value) => {
-        // this.setState({value}); // Do i really need this?
-        console.log(value);
-      });
+      .onValue((value) => this.setState({value}));
 
     // email validation
     inputStream
@@ -86,12 +83,12 @@ export default class TextField extends React.Component {
   }
 
   render() {
-    const {name, label, type} = this.props;
+    const {label, type} = this.props;
 
     return (
       <fieldset>
         {label && <label htmlFor={name}>{label}</label>}
-        <input ref={name} name={name} type={type} />
+        <input ref="input" type={type} />
         {this.renderErrors()}
       </fieldset>
     );
@@ -103,7 +100,6 @@ TextField.defaultProps = {
 };
 
 TextField.propTypes = {
-  name: React.PropTypes.string.isRequired,
   label: React.PropTypes.string,
   type: React.PropTypes.string
 };
