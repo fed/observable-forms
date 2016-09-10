@@ -1,0 +1,44 @@
+@value green: #3cca5e;
+@value red: #f2565a;
+
+:global {
+  body {
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  label {
+    display: block;
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="email"] {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+    max-width: 300px;
+    padding: 10px;
+    width: 100%;
+  }
+
+  button[type="submit"] {
+    background-color: green;
+    border: 0;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 10px;
+    margin-left: 5px;
+    padding: 3px 6px;
+    text-transform: uppercase;
+  }
+
+  .error-message {
+    color: red;
+    font-weight: bold;
+  }
+}
