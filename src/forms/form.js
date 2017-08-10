@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import fromPairs from 'lodash/fromPairs';
-import {getFunctionName} from '../utils/helpers';
-import * as inputTypes from './index';
+import {isInputField} from '../utils/helpers';
 
 export default class Form extends React.Component {
   constructor() {
@@ -19,21 +18,12 @@ export default class Form extends React.Component {
     };
   }
 
-  getInputFields() {
-    return React.Children
-      .toArray(this.props.children)
-      .filter(component => {
-        const name = getFunctionName(component.type);
-        const invalidFields = ['Form', 'Submit'];
-
-        return Object(inputTypes).hasOwnProperty(name) && invalidFields.indexOf(name) === -1;
-      });
+  getChildren() {
+    return React.Children.toArray(this.props.children);
   }
 
-  getSubmitButton() {
-    return React.Children
-      .toArray(this.props.children)
-      .filter(component => getFunctionName(component.type) === 'Submit');
+  getInputFields() {
+    return this.getChildren().filter(isInputField);
   }
 
   isValid() {
@@ -46,9 +36,9 @@ export default class Form extends React.Component {
 
   onSubmit() {
     if (this.isValid()) {
-      const formValuesArray = this.getInputFields().map(textfield => [
-        textfield.props.id,
-        this.refs[textfield.props.id].state.value
+      const formValuesArray = this.getInputFields().map(field => [
+        field.props.id,
+        this.refs[field.props.id].state.value
       ]);
       const formValues = fromPairs(formValuesArray);
 
@@ -59,13 +49,17 @@ export default class Form extends React.Component {
   }
 
   render() {
-    const inputFields = this.getInputFields()
-      .map(component => React.cloneElement(component, { ref: component.props.id }));
+    const children = this.getChildren().map(component => {
+      if (isInputField(component)) {
+        return React.cloneElement(component, { ref: component.props.id });
+      } else {
+        return component;
+      }
+    });
 
     return (
       <form method="POST">
-        {inputFields}
-        {this.getSubmitButton()}
+        {children}
       </form>
     );
   }

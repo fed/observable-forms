@@ -14,7 +14,7 @@ export default class Email extends React.Component {
   }
 
   componentDidMount() {
-    const element = this.refs[`input-email-${this.props.id}`];
+    const element = this.refs.input;
     const input$ = Rx.Observable
       .fromEvent(element, 'keyup')
       .debounceTime(300)
