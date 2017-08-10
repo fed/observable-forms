@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import fromPairs from 'lodash/fromPairs';
 
 export default class Form extends React.Component {
@@ -54,8 +55,8 @@ Form.defaultProps = {
 };
 
 Form.propTypes = {
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.object,
-    React.PropTypes.array
+  children: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
   ]).isRequired
 };

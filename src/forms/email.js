@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Bacon from 'baconjs';
 import findIndex from 'lodash/findIndex';
-import isEmail from '../../utils/isEmail';
+import isEmail from '../utils/isEmail';
 
 export default class Email extends React.Component {
   constructor() {
@@ -78,6 +79,6 @@ export default class Email extends React.Component {
 }
 
 Email.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  label: React.PropTypes.string
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string
 };

@@ -1,0 +1,47 @@
+body {
+  color: #333;
+  font-family: sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+fieldset {
+  border: 0;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"] {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+  max-width: 300px;
+  padding: 10px;
+  width: 100%;
+}
+
+button[type="submit"],
+input[type="submit"] {
+  background-color: #056cc1;
+  border: 0;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 10px;
+  padding: 10px;
+  text-transform: uppercase;
+}
+
+.error-message {
+  color: #f2565a;
+  font-weight: bold;
+}
