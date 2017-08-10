@@ -959,10 +959,6 @@ babylon@^6.17.0, babylon@^6.17.2, babylon@^6.17.4:
   version "6.17.4"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.17.4.tgz#3e8b7402b88d22c3423e137a1577883b15ff869a"
 
-baconjs@^0.7.95:
-  version "0.7.95"
-  resolved "https://registry.yarnpkg.com/baconjs/-/baconjs-0.7.95.tgz#96869a814c730e62e5991944eb2fcb8c97171615"
-
 balanced-match@^0.4.2:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-0.4.2.tgz#cb3f3e3c732dc0f01ee70b403f302e61d7709838"
