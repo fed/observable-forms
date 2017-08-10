@@ -1,3 +1,7 @@
 .App {
   margin: 30px;
 }
+
+.App__field {
+  margin-bottom: 15px;
+}

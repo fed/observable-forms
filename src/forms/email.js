@@ -68,20 +68,20 @@ export default class Email extends React.Component {
   renderErrors() {
     const {errors} = this.state;
     const errorList = errors.map((error, index) => (
-      <li key={index} className="error-message">{error.message}</li>
+      <li key={index} className="errors__message">{error.message}</li>
     ));
 
     if (errors.length > 0) {
-      return <ul>{errorList}</ul>;
+      return <ul className="errors">{errorList}</ul>;
     }
   }
 
   render() {
-    const {id, placeholder} = this.props;
+    const {id, placeholder, className} = this.props;
 
     return (
-      <div>
-        <input id={id} ref={`input-email-${id}`} type="email" placeholder={placeholder} />
+      <div className={className}>
+        <input id={id} ref="input" type="email" placeholder={placeholder} />
         {this.renderErrors()}
       </div>
     );
@@ -90,5 +90,6 @@ export default class Email extends React.Component {
 
 Email.propTypes = {
   id: PropTypes.string.isRequired,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  className: PropTypes.string
 };

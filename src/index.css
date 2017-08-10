@@ -41,7 +41,11 @@ input[type="submit"] {
   text-transform: uppercase;
 }
 
-.error-message {
+.errors {
+  margin-bottom: 0;
+}
+
+.errors__message {
   color: #f2565a;
   font-weight: bold;
 }

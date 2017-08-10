@@ -15,10 +15,10 @@ export default function App() {
 
       <Form onSubmit={handleSubmit}>
         <label htmlFor="emailAddress">Email Address</label>
-        <Email id="emailAddress" placeholder="Enter your email address" />
+        <Email className="App__field" id="emailAddress" placeholder="Enter your email address" />
 
-        <label htmlFor="confirmEmailAddress">Email Address</label>
-        <Email id="confirmEmailAddress" placeholder="Please confirm your email address" />
+        <label htmlFor="confirmEmailAddress">Confirm your Email Address</label>
+        <Email className="App__field" id="confirmEmailAddress" placeholder="Please confirm your email address" />
 
         <Submit>Submit form</Submit>
       </Form>
