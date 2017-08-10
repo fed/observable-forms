@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Bacon from 'baconjs';
+import Rx from 'rxjs/Rx';
 import findIndex from 'lodash/findIndex';
 import isEmail from '../utils/isEmail';
 
@@ -15,38 +15,46 @@ export default class Email extends React.Component {
 
   componentDidMount() {
     const element = this.refs.input;
-    const inputStream = Bacon
+    const input$ = Rx.Observable
       .fromEvent(element, 'keyup')
-      .debounce(300)
-      .map((event) => event.target.value);
+      .debounceTime(300)
+      .map(event => event.target.value);
 
     // set state
-    inputStream.onValue((value) => this.setState({value}));
+    input$.subscribe(value => this.setState({ value }));
 
     const validators = [
-      {type: 'email', isValid: isEmail, message: 'Invalid email address'},
-      {type: 'length', isValid: (value) => value.length > 5, message: 'Gotta have at least six characters'}
+      {
+        type: 'email',
+        isValid: isEmail,
+        message: 'Invalid email address'
+      },
+      {
+        type: 'length',
+        isValid: value => value.length > 5,
+        message: 'Gotta have at least six characters'
+      }
     ];
 
-    validators.forEach((validator) => {
+    validators.forEach(validator => {
       const {isValid, type, message} = validator;
 
-      inputStream
+      input$
         .filter((value) => !isValid(value))
-        .onValue(() => {
-          const errors = this.state.errors;
+        .subscribe(() => {
+          const {errors} = this.state;
           const alreadyInvalid = findIndex(errors, ['type', type]);
 
           if (alreadyInvalid === -1) {
-            errors.push({type, message});
-            this.setState({errors});
+            errors.push({ type, message });
+            this.setState({ errors });
           }
         });
 
       // Remove error message when value is valid
-      inputStream
+      input$
         .filter((value) => isValid(value))
-        .onValue(() => {
+        .subscribe(() => {
           const errorIndex = findIndex(this.state.errors, ['type', type]);
 
           this.setState({
@@ -58,7 +66,9 @@ export default class Email extends React.Component {
 
   renderErrors() {
     const {errors} = this.state;
-    const errorList = errors.map((error, index) => <li key={index} className="error-message">{error.message}</li>);
+    const errorList = errors.map((error, index) => (
+      <li key={index} className="error-message">{error.message}</li>
+    ));
 
     if (errors.length > 0) {
       return <ul>{errorList}</ul>;
