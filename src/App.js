@@ -1,8 +1,8 @@
 import React from 'react';
-import {Form, Email} from './forms';
+import {Form, Email, Submit} from './forms';
 import './App.css';
 
-function handleClick(formData) {
+function handleSubmit(formData) {
   console.info('Form processing logic', formData);
 }
 
@@ -13,10 +13,14 @@ export default function App() {
         <h1>observable-forms@0.0.0</h1>
       </header>
 
-      <Form>
-        <Email name="emailAddress" label="Email address" />
-        <Email name="confirmEmailAddress" label="Confirm email address" />
-        <button type="submit" onClick={handleClick}>Submit form</button>
+      <Form onSubmit={handleSubmit}>
+        <label htmlFor="emailAddress">Email Address</label>
+        <Email id="emailAddress" placeholder="Enter your email address" />
+
+        <label htmlFor="confirmEmailAddress">Email Address</label>
+        <Email id="confirmEmailAddress" placeholder="Please confirm your email address" />
+
+        <Submit>Submit form</Submit>
       </Form>
     </section>
   );

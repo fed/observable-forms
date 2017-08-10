@@ -1,40 +1,58 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import fromPairs from 'lodash/fromPairs';
+import {getFunctionName} from '../utils/helpers';
+import * as inputTypes from './index';
 
 export default class Form extends React.Component {
-  getChildren() {
-    return React.Children.toArray(this.props.children);
+  constructor() {
+    super();
+
+    this.getInputFields = this.getInputFields.bind(this);
+    this.isValid = this.isValid.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  getChildContext() {
+    return {
+      onSubmit: this.onSubmit
+    };
   }
 
   getInputFields() {
-    return this.getChildren()
-      .filter((component) => component.type !== 'button');
+    return React.Children
+      .toArray(this.props.children)
+      .filter(component => {
+        const name = getFunctionName(component.type);
+        const invalidFields = ['Form', 'Submit'];
+
+        return Object(inputTypes).hasOwnProperty(name) && invalidFields.indexOf(name) === -1;
+      });
   }
 
   getSubmitButton() {
-    return this.getChildren()
-      .filter((component) => component.type === 'button')[0];
+    return React.Children
+      .toArray(this.props.children)
+      .filter(component => getFunctionName(component.type) === 'Submit');
   }
 
   isValid() {
     const invalidChildren = this.getInputFields()
-      .map((component) => component.props.name)
-      .filter((ref) => this.refs[ref].state.errors.length > 0);
+      .map(component => component.props.id)
+      .filter(ref => this.refs[ref].state.errors.length > 0);
 
     return invalidChildren.length === 0;
   }
 
-  handleSubmit() {
+  onSubmit() {
     if (this.isValid()) {
-      const formValuesArray = this.getInputFields()
-        .map((textfield) => [
-          textfield.props.name,
-          this.refs[textfield.props.name].state.value
-        ]);
+      const formValuesArray = this.getInputFields().map(textfield => [
+        textfield.props.id,
+        this.refs[textfield.props.id].state.value
+      ]);
       const formValues = fromPairs(formValuesArray);
 
-      this.getSubmitButton().props.onClick(formValues);
+      this.props.onSubmit(formValues);
     } else {
       console.error('Form is not valid');
     }
@@ -42,11 +60,14 @@ export default class Form extends React.Component {
 
   render() {
     const inputFields = this.getInputFields()
-      .map((component) => React.cloneElement(component, {ref: component.props.name}));
-    const submitButton = React.cloneElement(this.getSubmitButton(), {onClick: this.handleSubmit.bind(this)});
-    const children = inputFields.concat([submitButton]);
+      .map(component => React.cloneElement(component, { ref: component.props.id }));
 
-    return <div>{children}</div>;
+    return (
+      <form method="POST">
+        {inputFields}
+        {this.getSubmitButton()}
+      </form>
+    );
   }
 }
 
@@ -55,8 +76,13 @@ Form.defaultProps = {
 };
 
 Form.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array
   ]).isRequired
+};
+
+Form.childContextTypes = {
+  onSubmit: PropTypes.func.isRequired
 };

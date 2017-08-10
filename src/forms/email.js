@@ -14,11 +14,12 @@ export default class Email extends React.Component {
   }
 
   componentDidMount() {
-    const element = this.refs.input;
+    const element = this.refs[`input-email-${this.props.id}`];
     const input$ = Rx.Observable
       .fromEvent(element, 'keyup')
       .debounceTime(300)
-      .map(event => event.target.value);
+      .map(event => event.target.value)
+      .startWith('');
 
     // set state
     input$.subscribe(value => this.setState({ value }));
@@ -76,19 +77,18 @@ export default class Email extends React.Component {
   }
 
   render() {
-    const {label} = this.props;
+    const {id, placeholder} = this.props;
 
     return (
-      <fieldset>
-        {label && <label>{label}</label>}
-        <input ref="input" type="email" />
+      <div>
+        <input id={id} ref={`input-email-${id}`} type="email" placeholder={placeholder} />
         {this.renderErrors()}
-      </fieldset>
+      </div>
     );
   }
 }
 
 Email.propTypes = {
-  name: PropTypes.string.isRequired,
-  label: PropTypes.string
+  id: PropTypes.string.isRequired,
+  placeholder: PropTypes.string
 };
