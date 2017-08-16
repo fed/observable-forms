@@ -13,7 +13,7 @@ export default function App() {
         <h1>observable-forms@0.0.0</h1>
       </header>
 
-      <Form onSubmit={handleSubmit}>
+      <Form action={handleSubmit}>
         <label htmlFor="emailAddress">Email Address</label>
         <Email className="App__field" id="emailAddress" placeholder="Enter your email address" />
 

@@ -42,7 +42,7 @@ export default class Form extends React.Component {
       ]);
       const formValues = fromPairs(formValuesArray);
 
-      this.props.onSubmit(formValues);
+      this.props.action(formValues);
     } else {
       console.error('Form is not valid');
     }
@@ -70,7 +70,7 @@ Form.defaultProps = {
 };
 
 Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  action: PropTypes.func.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array
