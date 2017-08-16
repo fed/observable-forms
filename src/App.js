@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Email, Submit} from './forms';
+import {Form, Text, Email, Submit} from './forms';
 import './App.css';
 
 function handleSubmit(formData) {
@@ -14,6 +14,9 @@ export default function App() {
       </header>
 
       <Form action={handleSubmit}>
+        <label htmlFor="emailAddress">Your name</label>
+        <Text className="App__field" id="name" placeholder="Enter your full name" />
+
         <label htmlFor="emailAddress">Email Address</label>
         <Email className="App__field" id="emailAddress" placeholder="Enter your email address" />
 
