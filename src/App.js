@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, Text, Email, Submit} from './forms';
+import {Form, Text, Number, Email, Submit} from './forms';
 import './App.css';
 
 function handleSubmit(formData) {
@@ -14,8 +14,11 @@ export default function App() {
       </header>
 
       <Form action={handleSubmit}>
-        <label htmlFor="emailAddress">Your name</label>
+        <label htmlFor="name">Your name</label>
         <Text className="App__field" id="name" placeholder="Enter your full name" />
+
+        <label htmlFor="age">Your age</label>
+        <Number className="App__field" id="age" placeholder="Enter your age" value="27" step="2" min="2" max="30" />
 
         <label htmlFor="emailAddress">Email Address</label>
         <Email className="App__field" id="emailAddress" placeholder="Enter your email address" />
